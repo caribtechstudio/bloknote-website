@@ -1,0 +1,20 @@
+{
+  "name": "bloknot-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Le site officiel de Bloknot, par Carib Tech Studio.",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check.mjs",
+    "test:browser": "node scripts/browser-check.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0"
+  }
+}
