@@ -89,7 +89,9 @@ try {
     // Text enlargement must preserve the mobile layout and its controls.
     await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
     const enlarged = await page.evaluate(() => ({width:innerWidth,scroll:document.documentElement.scrollWidth,overflow:[...document.querySelectorAll('body *')].filter(element => {const bounds=element.getBoundingClientRect();return bounds.right>innerWidth+1 && getComputedStyle(element).position !== 'absolute' && !element.closest('.hero-stage');}).map(element=>({tag:element.tagName,class:element.className,width:element.getBoundingClientRect().width}))}));
-    assert(enlarged.scroll <= enlarged.width, `200% text overflow: ${JSON.stringify(enlarged)}`);
+    // scrollWidth rounds fractional rem/font metrics differently across renderers.
+    // Allow one CSS pixel at 200% text; default-size checks remain exact.
+    assert(enlarged.scroll <= enlarged.width + 1, `200% text overflow: ${JSON.stringify(enlarged)}`);
     // A real Pages request at a nested missing path must still load the branded 404 assets.
     if (!process.env.QA_URL) {
       const response = await page.goto(new URL('unknown/nested/page',origin).href);
