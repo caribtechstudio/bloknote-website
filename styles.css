@@ -29,3 +29,5 @@ html:not(.js) .demo-tabs,html:not(.js) .filters,html:not(.js) .nav-toggle{displa
 .document-header h1{overflow-wrap:anywhere;hyphens:auto}
 h1,h2,h3,p{overflow-wrap:anywhere}.demo-copy,.organize-copy,.privacy-heading,.faq-intro,.faq-list,.document-header,.document-body{min-width:0}
 @media(max-width:760px){.demo-layout,.organize-layout,.faq-layout{grid-template-columns:minmax(0,1fr)}}
+/* Keep rotated decorative labels inside their illustration at enlarged text sizes. */
+.organize-art{overflow:clip}
