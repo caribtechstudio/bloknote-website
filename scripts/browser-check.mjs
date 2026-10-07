@@ -21,6 +21,7 @@ try {
     const context = await browser.newContext({reducedMotion:'reduce'});
     const page = await context.newPage();
     page.setDefaultTimeout(10000);
+    page.setDefaultNavigationTimeout(30000);
     page.on('pageerror', error => errors.push(error.message));
     page.on('console', message => {
       if (message.type() !== 'error') return;
@@ -87,7 +88,8 @@ try {
     assert((await page.locator('#disponibilite .button').getAttribute('href')).startsWith('mailto:contact@caribtechstudio.com?'));
     // Text enlargement must preserve the mobile layout and its controls.
     await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
-    assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),'200% text overflow');
+    const enlarged = await page.evaluate(() => ({width:innerWidth,scroll:document.documentElement.scrollWidth,overflow:[...document.querySelectorAll('body *')].filter(element => {const bounds=element.getBoundingClientRect();return bounds.right>innerWidth+1 && getComputedStyle(element).position !== 'absolute' && !element.closest('.hero-stage');}).map(element=>({tag:element.tagName,class:element.className,width:element.getBoundingClientRect().width}))}));
+    assert(enlarged.scroll <= enlarged.width, `200% text overflow: ${JSON.stringify(enlarged)}`);
     // A real Pages request at a nested missing path must still load the branded 404 assets.
     if (!process.env.QA_URL) {
       const response = await page.goto(new URL('unknown/nested/page',origin).href);

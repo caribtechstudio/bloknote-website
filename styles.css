@@ -27,3 +27,5 @@ html:not(.js) .demo-tabs,html:not(.js) .filters,html:not(.js) .nav-toggle{displa
 @media(prefers-reduced-motion:reduce){.reveal-pending{opacity:1;transform:none}.reveal-visible{transition:none}.hero-stage:before{animation:none}}
 .button-primary:hover{background-image:linear-gradient(115deg,#9294ff,#8183f5,#a39bf9)}
 .document-header h1{overflow-wrap:anywhere;hyphens:auto}
+h1,h2,h3,p{overflow-wrap:anywhere}.demo-copy,.organize-copy,.privacy-heading,.faq-intro,.faq-list,.document-header,.document-body{min-width:0}
+@media(max-width:760px){.demo-layout,.organize-layout,.faq-layout{grid-template-columns:minmax(0,1fr)}}
