@@ -53,12 +53,13 @@ Pour un futur domaine personnalisé, définir `SITE_URL=https://votre-domaine.fr
 - Aperçus : maquettes illustratives générées à partir des blocs, couleurs et notes d’exemple du projet iOS, clairement identifiées comme démonstrations. Le simulateur natif ne produisait que des écrans noirs. Régénération : `node scripts/render-demo.mjs`, puis conversion en WebP. Remplacer ces visuels par les captures natives définitives avant le lancement.
 - Fonctions : `BlockKind`, widgets, Siri, exports, recherche et politique de confidentialité du projet iOS.
 - Inspiration de composition : [Lumio par JAISURIYA](https://dribbble.com/shots/27704348-Lumio-an-Ai-Productivity-SaaS). Aucun texte, logo, témoignage ni visuel Lumio n’a été réutilisé.
+- Icônes : SVG officiels [Lucide](https://lucide.dev/), auto-hébergés et intégrés directement dans le HTML. Sources, commit et licences ISC / MIT dans `assets/icons/`. Régénération : `npm run icons:sync`. Le logo de Bloknot reste celui de l’application.
 - Police Inter : auto-hébergée, licence SIL OFL dans `assets/fonts/LICENSE.txt`.
 
 ## Choix de confidentialité et accessibilité
 
 Aucun cookie, localStorage, analytics ou pixel publicitaire. Polices et images auto-hébergées. GitHub peut enregistrer les requêtes techniques nécessaires à son hébergement, comme décrit dans la politique du site. Les liens de contact passent par `mailto:`.
 
-Apparitions au scroll, transitions des aperçus, dégradés interactifs et progression discrète de lecture. Toutes les animations respectent le réglage de réduction des mouvements et les contenus restent accessibles au clavier.
+Apparitions au scroll, transitions des aperçus, dégradés des titres en mouvement fluide de gauche à droite (boucle de 12 secondes), dégradés interactifs et progression discrète de lecture. Toutes les animations respectent le réglage de réduction des mouvements et les contenus restent accessibles au clavier.
 
 Navigation au clavier, lien d’évitement, focus visible, onglets avec touches fléchées, filtres annoncés aux lecteurs d’écran, FAQ native, respect de `prefers-reduced-motion`, catalogue et navigation accessibles sans JavaScript. Métadonnées SEO, Open Graph textuel, sitemap, favicon, et politique de sécurité des contenus.

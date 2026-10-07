@@ -5,6 +5,7 @@
   "description": "Le site officiel de Bloknot, par Carib Tech Studio.",
   "type": "module",
   "scripts": {
+    "icons:sync": "node scripts/sync-icons.mjs",
     "dev": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",
     "check": "node scripts/check.mjs",

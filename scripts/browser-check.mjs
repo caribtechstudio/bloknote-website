@@ -114,6 +114,26 @@ try {
     const motion = await browser.newContext({reducedMotion:'no-preference',viewport:{width:390,height:844}});
     const animated = await motion.newPage();
     await animated.goto(origin);
+    // Check actual left-to-right travel and a seamless full-tile loop on both titles.
+    const gradientMotion = await animated.locator('.gradient-text').evaluateAll(elements => elements.map(element => {
+      const animation = element.getAnimations().find(item => item.animationName === 'gradient-flow');
+      if (!animation) return null;
+      animation.pause();
+      animation.currentTime = 0;
+      const start = getComputedStyle(element).backgroundPositionX;
+      animation.currentTime = 6000;
+      const middle = getComputedStyle(element).backgroundPositionX;
+      const bounds = element.getBoundingClientRect();
+      return {start, middle, duration:animation.effect.getTiming().duration, backgroundSize:getComputedStyle(element).backgroundSize, width:bounds.width};
+    }));
+    assert.equal(gradientMotion.length,2);
+    for (const gradient of gradientMotion) {
+      assert(gradient && gradient.width > 0, 'Gradient title must render and animate');
+      assert.equal(gradient.start,'200%');
+      assert.equal(gradient.middle,'100%');
+      assert.equal(gradient.duration,12000);
+      assert.equal(gradient.backgroundSize,'200% 100%');
+    }
     await animated.locator('#fonctionnalites').scrollIntoViewIfNeeded();
     await animated.waitForTimeout(750);
     assert(await animated.locator('.feature-card.reveal-visible').count() > 0);
@@ -121,6 +141,7 @@ try {
     await animated.emulateMedia({reducedMotion:'reduce'});
     await animated.waitForTimeout(100);
     assert.equal(await animated.locator('.reveal-pending').count(),0);
+    assert(await animated.locator('.gradient-text').evaluateAll(elements => elements.every(element => element.getAnimations().length === 0 && getComputedStyle(element).backgroundImage !== 'none')), 'Reduced motion keeps the gradient visible and stationary');
     await motion.close();
     await browser.close();
   }
